@@ -44,15 +44,15 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-8 justify-center">
+      <div className="flex flex-wrap gap-4 mb-8 justify-center">
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+            className={`text-sm font-medium transition-all duration-200 uppercase ${
               selectedCategory === category
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "text-[#fc077d] border-b-2 border-[#fc077d] "
+                : "text-white hover:border-b-2 "
             }`}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -61,7 +61,7 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
       </div>
 
       {/* Masonry Grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+      <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
         {filteredItems.map((item, index) => {
           const videoId = getYouTubeVideoId(item.videoUrl);
           return (
@@ -70,16 +70,20 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
               className="break-inside-avoid mb-4 group cursor-pointer"
               onClick={() => handleVideoClick(item.videoUrl)}
             >
-              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gray-200">
+              <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gray-900">
                 {videoId ? (
                   <div
                     className="relative w-full"
                     style={{
-                      paddingBottom: item.isVertical ? "133.33%" : "75%",
+                      paddingBottom: item.isVertical ? "177.78%" : "56.25%",
                     }}
                   >
                     <iframe
-                      src={`https://www.youtube.com/embed/${videoId}?controls=1&modestbranding=1&rel=0&showinfo=0&autoplay=0&mute=0`}
+                      key={videoId}
+                      // autoplay
+                      src={`https://www.youtube.com/embed/${videoId}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=1&mute=1&loop=1&playlist=${videoId}`}
+                      // no autoplay
+                      // src={`https://www.youtube.com/embed/${videoId}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=0&mute=0&loop=1&playlist=${videoId}`}
                       title="YouTube video"
                       className="absolute top-0 left-0 w-full h-full"
                       frameBorder="0"
@@ -94,8 +98,8 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
                       paddingBottom: item.isVertical ? "133.33%" : "75%",
                     }}
                   >
-                    <div className="absolute top-0 left-0 w-full h-full bg-gray-300 flex items-center justify-center">
-                      <span className="text-gray-500">Video not available</span>
+                    <div className="absolute top-0 left-0 w-full h-full bg-gray-700 flex items-center justify-center">
+                      <span className="text-gray-400">Video not available</span>
                     </div>
                   </div>
                 )}
