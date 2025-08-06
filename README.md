@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 📝 How to Update Your Portfolio Videos
 
-## Getting Started
+### 1. Navigate to the Data File
 
-First, run the development server:
+- Go to the `data` folder in this repository
+- Click on the file called `youtubeVideos.json`
+- Click the pencil icon (✏️) in the top-right corner to edit the file
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 2. Understanding the Video Structure
+
+Each video in your portfolio has this format:
+
+```json
+{
+  "videoUrl": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID",
+  "category": "category-name",
+  "isVertical": true
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Adding New Videos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To add a new video:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Get the YouTube URL**: Copy the full URL from your YouTube video
+2. **Choose a category**: You can use any category name you want. Here are some examples:
 
-## Learn More
+   - `marketing` - For marketing and strategy videos
+   - `branding` - For branding and identity videos
 
-To learn more about Next.js, take a look at the following resources:
+   Feel free to create your own categories that match your work!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Set vertical orientation**:
+   - Use `"isVertical": true` for YouTube Shorts or vertical videos
+   - Use `"isVertical": false` or omit this line for regular horizontal videos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Example of Adding a New Video
 
-## Deploy on Vercel
+Add your new video entry to the `videos` array:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+  "videos": [
+    // ... existing videos ...
+    {
+      "videoUrl": "https://www.youtube.com/watch?v=EXISTING_VIDEO_ID",
+      "category": "category",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/watch?v=YOUR_NEW_VIDEO_ID",
+      "category": "marketing",
+      "isVertical": false
+    }
+  ]
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Important**: Don't forget to add a comma after the previous video entry, but don't add a comma after the last entry in the array
+
+### 5. Removing Videos
+
+To remove a video, simply delete its entire entry from the `videos` array.
+
+### 6. Reordering Videos
+
+You can change the order of videos by moving their entries up or down in the `videos` array. Videos appear on the website in the same order they appear in this file.
+
+## 🔄 Publishing Updates
+
+After editing the `youtubeVideos.json` file in GitHub:
+
+1. **Click the green "Commit changes" button on the top right**
+2. **Click the green "Commit changes" button in the pop-up**
+
+The changes will automatically appear on your live website once the commit is complete!
+

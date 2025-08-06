@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import MasonryGrid from "@/components/MasonryGrid";
-import { portfolioItems } from "@/data/portfolioData";
+import { portfolioItems } from "../../data/portfolioData";
 
 export default function Home() {
   return (
