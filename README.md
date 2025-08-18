@@ -2,7 +2,7 @@
 
 ### 1. Navigate to the Data File
 
-- Go to the `data` folder in this repository
+- Go to the `public/data` folder in this repository
 - Click on the file called `youtubeVideos.json`
 - Click the pencil icon (✏️) in the top-right corner to edit the file
 

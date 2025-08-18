@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoUrl": "https://www.youtube.com/watch?v=Sb-8sYIG2vI",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/tpkgpcRyUFA",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/WydXq-5htUM",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/watch?v=qrNEvRecaK8",
+      "category": "Trailer"
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/_UtBq7ccAc4",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/xAypZzqEuIM",
+      "category": "Trailer",
+      "isVertical": true
+    },
+    
+    {
+      "videoUrl": "https://www.youtube.com/shorts/Ya6s7wtEUWk",
+      "category": "Collection Launch",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/3EqGto7FP2M",
+      "category": "Collection Launch",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/znuR9jMoNws",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/aR3YMzdTAII",
+      "category": "Promotion",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/shorts/qjlT4JtUpgc",
+      "category": "Feature",
+      "isVertical": true
+    },
+    {
+      "videoUrl": "https://www.youtube.com/watch?v=qgEHRJnn1yw",
+      "category": "Event Highlight"
+    }
+  ]
+}
