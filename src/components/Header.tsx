@@ -1,5 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface UserData {
   title: string;
@@ -17,6 +18,7 @@ interface HeaderProps {
 export default function Header({ isScrolled = false }: HeaderProps) {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -52,9 +54,9 @@ export default function Header({ isScrolled = false }: HeaderProps) {
       <div className="w-full px-4 sm:px-6 py-3 sm:py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center pointer-events-none">
-          <h1 className={`text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent transition-opacity duration-300 ${
+          <h1 className={`text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold transition-opacity duration-300 ${
             isScrolled ? "opacity-100" : "opacity-0"
-          }`}>
+          }`} style={{ fontFamily: 'var(--font-family)', color: 'var(--primary-color, #fc077d)' }}>
             {userData.title}
           </h1>
         </div>
@@ -63,20 +65,22 @@ export default function Header({ isScrolled = false }: HeaderProps) {
         <div className="flex items-center space-x-2 sm:space-x-4">
           <a
             href={`mailto:${userData.contact.email.address}`}
-            className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            className="hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            style={{ color: 'var(--primary-color, #fc077d)' }}
           >
             <Mail className="w-5 h-5" />
-            <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base">
+            <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base" style={{ fontFamily: 'var(--font-family)' }}>
               {userData.contact.email.address}
             </span>
           </a>
 
           <a
             href={`tel:${userData.contact.phone.number.replace(/\s/g, "")}`}
-            className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            className="hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            style={{ color: 'var(--primary-color, #fc077d)' }}
           >
             <Phone className="w-5 h-5" />
-            <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base">
+            <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base" style={{ fontFamily: 'var(--font-family)' }}>
               {userData.contact.phone.number}
             </span>
           </a>
@@ -85,7 +89,8 @@ export default function Header({ isScrolled = false }: HeaderProps) {
             href={`https://instagram.com/${userData.contact.instagram.profile}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            className="hover:text-white transition-colors duration-200 flex items-center space-x-1"
+            style={{ color: 'var(--primary-color, #fc077d)' }}
           >
             <svg
               className="w-5 h-5"

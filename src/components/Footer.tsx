@@ -1,12 +1,15 @@
+import { useTheme } from "@/hooks/useTheme";
+
 export default function Footer() {
+  const { theme } = useTheme();
   return (
     <footer className="w-full mt-20 py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
         <div className="space-y-2">
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm" style={{ fontFamily: 'var(--font-family)' }}>
             Created by Justin Cai. © 2025
           </p>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-sm" style={{ fontFamily: 'var(--font-family)' }}>
             Website by{" "}
             <a 
               href="https://oscar-yu-portfolio.vercel.app/" 

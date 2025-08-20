@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import MasonryGrid from "@/components/MasonryGrid";
 import Footer from "@/components/Footer";
+import { useTheme } from "@/hooks/useTheme";
 
 interface UserData {
   title: string;
@@ -11,6 +12,7 @@ interface UserData {
 const Index = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,14 +44,14 @@ const Index = () => {
 
       <main className="relative">
         {/* Title above grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 sm:mb-8 mb-4 text-center">
           {userData?.title && (
             <>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold" style={{ fontFamily: 'var(--font-family)', color: 'var(--primary-color, #fc077d)' }}>
                 {userData.title}
               </h1>
               {userData.description && (
-                <p className="mt-4 text-lg sm:text-xl md:text-2xl text-muted-foreground">
+                <p className="mt-4 text-lg sm:text-xl md:text-2xl text-muted-foreground" style={{ fontFamily: 'var(--font-family)' }}>
                   {userData.description}
                 </p>
               )}

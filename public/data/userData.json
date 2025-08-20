@@ -1,6 +1,10 @@
 {
   "title": "Justin Cai",
   "description": "Creative Arts Initiative",
+  "theme": {
+    "primaryColor": "#fc077d", 
+    "fontUrl": "https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+  },
   "contact": {
     "email": {
       "address": "justincaimedia@gmail.com"
