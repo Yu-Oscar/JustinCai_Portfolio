@@ -29,7 +29,11 @@
       "category": "Trailer",
       "isVertical": true
     },
-    
+     {
+      "videoUrl": "https://www.youtube.com/watch?v=dTw4Q2k7Cg4&feature=youtu.be",
+      "category": "Feature",
+      "isVertical": false
+    },
     {
       "videoUrl": "https://www.youtube.com/shorts/Ya6s7wtEUWk",
       "category": "Collection Launch",
