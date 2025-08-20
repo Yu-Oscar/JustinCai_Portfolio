@@ -2,6 +2,7 @@ import { Mail, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface HeaderData {
+  title: string;
   contact: {
     email: { address: string };
     phone: { number: string };
@@ -35,7 +36,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center pointer-events-none">
             <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Creative Arts Initiative
+              Loading...
             </h1>
           </div>
           <div className="flex items-center space-x-4">
@@ -54,7 +55,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center pointer-events-none">
           <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Creative Arts Initiative
+            {headerData.title}
           </h1>
         </div>
 
