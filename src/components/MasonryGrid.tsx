@@ -2,47 +2,72 @@ import { useState, useEffect } from "react";
 
 interface VideoItem {
   videoUrl: string;
-  category: string;
   isVertical?: boolean;
 }
 
 interface GridItem {
   id: string;
   videoId: string;
+  platform: "youtube" | "instagram";
   title: string;
-  technique: string;
   aspectRatio: string;
   isVertical: boolean;
 }
 
 interface VideoEmbedProps {
   videoId: string;
+  platform: "youtube" | "instagram";
   title: string;
   aspectRatio: string;
 }
 
-function VideoEmbed({ videoId, title, aspectRatio }: VideoEmbedProps) {
-  return (
-    <div
-      className={`${aspectRatio} w-full relative overflow-hidden rounded-lg`}
-    >
-      <iframe
-        src={`https://www.youtube.com/embed/${videoId}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=1&mute=1&loop=1&playlist=${videoId}`}
-        title={title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="lazy"
-      />
-    </div>
-  );
+function VideoEmbed({
+  videoId,
+  platform,
+  title,
+  aspectRatio,
+}: VideoEmbedProps) {
+  if (platform === "youtube") {
+    return (
+      <div
+        className={`${aspectRatio} w-full relative overflow-hidden rounded-lg`}
+      >
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=1&mute=1&loop=1&playlist=${videoId}`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  if (platform === "instagram") {
+    return (
+      <div className="w-full relative overflow-hidden rounded-lg bg-white">
+        <iframe
+          src={`https://www.instagram.com/p/${videoId}/embed/`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full"
+          style={{
+            height: "600px",
+            border: "none",
+            maxWidth: "100%",
+          }}
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  return null;
 }
 
-interface MasonryGridProps {
-  selectedTag?: string;
-}
-
-export default function MasonryGrid({ selectedTag }: MasonryGridProps) {
+export default function MasonryGrid() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [videos, setVideos] = useState<GridItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,29 +80,54 @@ export default function MasonryGrid({ selectedTag }: MasonryGridProps) {
 
         const processedVideos: GridItem[] = data.videos.map(
           (video: VideoItem, index: number) => {
-            // Extract video ID from YouTube URL
-            const videoId = video.videoUrl.includes("youtube.com/shorts/")
-              ? video.videoUrl.split("youtube.com/shorts/")[1].split("?")[0]
-              : video.videoUrl.includes("youtube.com/watch?v=")
-              ? video.videoUrl.split("youtube.com/watch?v=")[1].split("&")[0]
-              : "";
+            let videoId = "";
+            let platform: "youtube" | "instagram" = "youtube";
 
-            // Determine aspect ratio based on isVertical
-            const aspectRatio = video.isVertical
-              ? "aspect-[9/16]"
-              : "aspect-video";
+            // Detect platform and extract video ID
+            if (video.videoUrl.includes("youtube.com/shorts/")) {
+              platform = "youtube";
+              videoId = video.videoUrl
+                .split("youtube.com/shorts/")[1]
+                .split("?")[0];
+            } else if (video.videoUrl.includes("youtube.com/watch?v=")) {
+              platform = "youtube";
+              videoId = video.videoUrl
+                .split("youtube.com/watch?v=")[1]
+                .split("&")[0];
+            } else if (video.videoUrl.includes("instagram.com/p/")) {
+              platform = "instagram";
+              videoId = video.videoUrl
+                .split("instagram.com/p/")[1]
+                .split("/")[0]
+                .split("?")[0];
+            } else if (video.videoUrl.includes("instagram.com/reel/")) {
+              platform = "instagram";
+              videoId = video.videoUrl
+                .split("instagram.com/reel/")[1]
+                .split("/")[0]
+                .split("?")[0];
+            }
 
-            // Generate title from category
-            const title = video.category
-              .split("-")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
+            // Determine aspect ratio based on platform and isVertical
+            let aspectRatio = "aspect-video";
+            if (platform === "instagram") {
+              // Instagram posts are typically square or vertical
+              aspectRatio = video.isVertical
+                ? "aspect-[9/16]"
+                : "aspect-square";
+            } else {
+              // YouTube videos
+              aspectRatio = video.isVertical ? "aspect-[9/16]" : "aspect-video";
+            }
+
+            // Generate default title
+            const title = `Video ${index + 1}`;
 
             return {
               id: (index + 1).toString(),
               videoId,
+              platform,
               title,
-              technique: video.category.toUpperCase(),
               aspectRatio,
               isVertical: video.isVertical || false,
             };
@@ -95,11 +145,6 @@ export default function MasonryGrid({ selectedTag }: MasonryGridProps) {
     fetchVideos();
   }, []);
 
-  const filteredItems = videos.filter((item) => {
-    const matchesTag = !selectedTag || item.technique === selectedTag;
-    return matchesTag;
-  });
-
   if (loading) {
     return (
       <div className="w-full max-w-7xl mx-auto px-6 py-8">
@@ -111,19 +156,19 @@ export default function MasonryGrid({ selectedTag }: MasonryGridProps) {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 py-2">
-      <div className="columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-        {filteredItems.map((item) => (
+    <div className="w-full px-6 py-2">
+      <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 gap-4 space-y-4">
+        {videos.map((item) => (
           <div
             key={item.id}
-            className="break-inside-avoid mb-4"
+            className="break-inside-avoid mb-4 w-full"
             onMouseEnter={() => setHoveredItem(item.id)}
             onMouseLeave={() => setHoveredItem(null)}
           >
-            <div className="relative group cursor-pointer">
+            <div className="relative group cursor-pointer w-full">
               <div
                 className={`
-                relative overflow-hidden rounded-lg bg-card border border-border/20
+                relative overflow-hidden rounded-lg bg-card border border-border/20 w-full
                 transition-all duration-500 ease-smooth
                 hover:border-primary/50 hover:shadow-card
                 ${hoveredItem === item.id ? "scale-[1.02]" : ""}
@@ -131,6 +176,7 @@ export default function MasonryGrid({ selectedTag }: MasonryGridProps) {
               >
                 <VideoEmbed
                   videoId={item.videoId}
+                  platform={item.platform}
                   title={item.title}
                   aspectRatio={item.aspectRatio}
                 />

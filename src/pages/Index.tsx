@@ -1,35 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
-import TagCloud from "@/components/TagCloud";
 import MasonryGrid from "@/components/MasonryGrid";
+import Footer from "@/components/Footer";
+
+interface UserData {
+  title: string;
+  description: string;
+}
 
 const Index = () => {
-  const [selectedTag, setSelectedTag] = useState<string | undefined>();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
-  const handleTagSelect = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? undefined : tag);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 90);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/data/userData.json");
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-dark">
-      <Header />
-      
+      <Header isScrolled={isScrolled} />
+
       <main className="relative">
-        {/* Tag Cloud */}
-        <section className="border-b border-border/20">
-          <TagCloud
-            onTagSelect={handleTagSelect}
-            selectedTag={selectedTag}
-          />
-        </section>
+        {/* Title above grid */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center">
+          {userData?.title && (
+            <>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                {userData.title}
+              </h1>
+              {userData.description && (
+                <p className="mt-4 text-lg sm:text-xl md:text-2xl text-muted-foreground">
+                  {userData.description}
+                </p>
+              )}
+            </>
+          )}
+        </div>
 
         {/* Gallery Grid */}
         <section>
-          <MasonryGrid
-            selectedTag={selectedTag}
-          />
+          <MasonryGrid />
         </section>
       </main>
+      
+      <Footer />
     </div>
   );
 };

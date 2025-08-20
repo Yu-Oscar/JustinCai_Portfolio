@@ -1,7 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 
-interface HeaderData {
+interface UserData {
   title: string;
   contact: {
     email: { address: string };
@@ -10,39 +10,37 @@ interface HeaderData {
   };
 }
 
-export default function Header() {
-  const [headerData, setHeaderData] = useState<HeaderData | null>(null);
+interface HeaderProps {
+  isScrolled?: boolean;
+}
+
+export default function Header({ isScrolled = false }: HeaderProps) {
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHeaderData = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch("/data/headerData.json");
+        const response = await fetch("/data/userData.json");
         const data = await response.json();
-        setHeaderData(data);
+        setUserData(data);
       } catch (error) {
-        console.error("Error loading header data:", error);
+        console.error("Error loading user data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchHeaderData();
+    fetchUserData();
   }, []);
 
-  if (loading || !headerData) {
+  if (loading || !userData) {
     return (
-      <header className="w-full bg-background/95 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+      <header className="w-full bg-background/95 backdrop-blur-sm sticky top-0 z-50">
+        <div className="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center pointer-events-none">
-            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Loading...
-            </h1>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-muted-foreground text-sm sm:text-base">
-              Loading...
-            </div>
           </div>
         </div>
       </header>
@@ -50,39 +48,41 @@ export default function Header() {
   }
 
   return (
-    <header className="w-full bg-background/95 backdrop-blur-sm border-b border-border/50 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+    <header className="w-full bg-background/95 backdrop-blur-sm sticky top-0 z-50">
+      <div className="w-full px-4 sm:px-6 py-3 sm:py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center pointer-events-none">
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            {headerData.title}
+          <h1 className={`text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent transition-opacity duration-300 ${
+            isScrolled ? "opacity-100" : "opacity-0"
+          }`}>
+            {userData.title}
           </h1>
         </div>
 
         {/* Social Links */}
         <div className="flex items-center space-x-2 sm:space-x-4">
           <a
-            href={`mailto:${headerData.contact.email.address}`}
+            href={`mailto:${userData.contact.email.address}`}
             className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
           >
             <Mail className="w-5 h-5" />
             <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base">
-              {headerData.contact.email.address}
+              {userData.contact.email.address}
             </span>
           </a>
 
           <a
-            href={`tel:${headerData.contact.phone.number.replace(/\s/g, "")}`}
+            href={`tel:${userData.contact.phone.number.replace(/\s/g, "")}`}
             className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
           >
             <Phone className="w-5 h-5" />
             <span className="hidden md:inline uppercase font-bold text-xs md:text-sm lg:text-base">
-              {headerData.contact.phone.number}
+              {userData.contact.phone.number}
             </span>
           </a>
 
           <a
-            href={`https://instagram.com/${headerData.contact.instagram.profile}`}
+            href={`https://instagram.com/${userData.contact.instagram.profile}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#fc077d] hover:text-white transition-colors duration-200 flex items-center space-x-1"
