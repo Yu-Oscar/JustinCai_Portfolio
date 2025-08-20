@@ -110,10 +110,11 @@ You can change the order of videos by moving their entries up or down in the `vi
 
 ## 🔄 Publishing Updates
 
-After editing the `youtubeVideos.json` file in GitHub:
+After editing the files in GitHub:
 
 1. **Click the green "Commit changes" button on the top right**
-2. **Click the green "Commit changes" button in the pop-up**
+2. **Click the green "Propose changes" button in the pop-up**
+3. **Click the green "Create pull request" on the next page**
+4. **Submit the pull request** for review
 
-The changes will automatically appear on your live website once the commit is complete!
-
+You can preview the changes by clicking the preview hyperlink from the Vercel bot comment. Once the developer reviews the changes, they will go live!
